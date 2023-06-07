@@ -1,0 +1,13 @@
+configuration{
+	display-run: "Run";
+	display-window: "Windows";
+	display-drun: "Applications";
+	drun-display-format: "{icon} {name}";
+	font: "JetBrainsMono Nerd Font Medium 10";
+	modi: "window,drun,run";
+	show-icons: true;
+	icon-theme: "Papirus";
+}
+
+
+@theme "~/.config/rofi/themes/arthur.rasi"
