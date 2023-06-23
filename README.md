@@ -1,2 +1,2 @@
 # dotfiles
-Dotfiles for my arch linux system running the awesome window manager
+Dotfiles for my system when I was running awesomewm
