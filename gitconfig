@@ -1,0 +1,7 @@
+[user]
+	email = benard.kihiuria@gmail.com
+	name = tkofb
+[init]
+	defaultBranch = winter
+[push]
+	default = current
