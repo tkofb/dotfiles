@@ -1,0 +1,28 @@
+i3lock -i ~/wallpapers/grub.png \
+	-k \
+	-L \
+	-S 1 \
+	--pass-media-keys \
+	--time-font="Calvin and Hobbes" \
+	--time-size=50 \
+	--date-font="Calvin and Hobbes" \
+	--date-size=50 \
+	--radius 30 \
+	--ring-width 15.0 \
+	--line-uses-inside \
+	--ring-color=000000 \
+	--keyhl-color=b284be \
+	--bshl-color=FFFFFF \
+	--time-pos="ix-650:iy+20" \
+	--time-str="%H:%M:%S" \
+	--date-str="%A: %d-%B" \
+	--date-pos="ix-300:iy+20" \
+	--ind-pos="x+750:y+1030" \
+	--verif-text="" \
+	--wrong-text="" \
+	--noinput-text="" \
+	--greeter-text="e" \
+	--greeter-pos="ix+1060:iy+20" \
+	--greeter-font="College Collage" \
+	--greeter-size=200 \
+	--no-verify
