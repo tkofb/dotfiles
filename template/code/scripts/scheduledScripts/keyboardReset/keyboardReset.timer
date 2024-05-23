@@ -1,0 +1,8 @@
+[Unit]
+Description=Keyboard Reset Scheduling
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+
+[Install]
+WantedBy=multi-user.target

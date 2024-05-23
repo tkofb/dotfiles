@@ -1,0 +1,6 @@
+[Unit]
+Description=Keyboard Reset
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/xset r rate 250 30 &
