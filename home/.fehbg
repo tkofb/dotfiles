@@ -1,0 +1,2 @@
+#!/bin/sh
+feh --no-fehbg --bg-center '/home/jani/wallpapers/primary/dreamy_naruto.png' '/home/jani/wallpapers/external/dreamy_naruto.png' 
