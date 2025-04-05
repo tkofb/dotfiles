@@ -11,4 +11,6 @@ keymap("v", ">", ">gv", default_opts)
 -- Switch buffer
 keymap("n", "<S-h>", ":bprevious<CR>", default_opts)
 keymap("n", "<S-l>", ":bnext<CR>", default_opts)
+keymap("n", "<C-h>", "<Cmd>BufferMovePrevious<CR>", default_opts)
+keymap("n", "<C-l>", "<Cmd>BufferMoveNext<CR>", default_opts)
 keymap("n", "<leader>d", ":bdelete<CR>", default_opts)

@@ -2,10 +2,9 @@ return {
 	"mfussenegger/nvim-lint",
 	config = function()
 		require("lint").linters_by_ft = {
-			lua = { "luacheck" },
 			python = { "pylint" },
 			javascript = { "eslint_d" },
-			html = { "erb_lint" },
+			html = { "htmlhint" },
 			css = { "stylelint" },
 		}
 

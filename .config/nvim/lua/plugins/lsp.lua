@@ -1,30 +1,3 @@
--- return {
--- {
--- 	"williamboman/mason.nvim",
--- 	config = function()
--- 		require("mason").setup({
--- 			ui = {
--- 				icons = {
--- 					package_installed = "✓ ",
--- 					package_pending = "➜ ",
--- 					package_uninstalled = "✗ ",
--- 				},
--- 			},
--- 		})
--- 	end,
--- },
--- 	{
--- 		"neovim/nvim-lspconfig",
--- 		config = function()
--- 			local lspconfig = require("lspconfig")
--- 			lspconfig.lua_ls.setup({})
---
--- 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
--- 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
--- 		end,
--- 	},
--- }
---
 return {
 	{
 		"williamboman/mason.nvim",
@@ -53,14 +26,10 @@ return {
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
-
-			lspconfig.lua_ls.setup({ capabilities = capabilities })
-			lspconfig.tsserver.setup({ capabilities = capabilities })
-			lspconfig.html.setup({ capabilities = capabilities })
-			lspconfig.cssls.setup({ capabilities = capabilities })
-			lspconfig.pylsp.setup({ capabilities = capabilities })
-			lspconfig.eslint.setup({ capabilities = capabilities })
-			lspconfig.ocamllsp.setup({ capabilities = capabilities })
+			-- lspconfig.lua_ls.setup({ capabilities = capabilities })
+			-- lspconfig.gopls.setup({ capabilities = capabilities })
+			require("lspconfig").gopls.setup({})
+			require("lspconfig").lua_ls.setup({})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})

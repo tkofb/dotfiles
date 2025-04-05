@@ -16,7 +16,6 @@ vim.opt.showmode = false
 
 vim.opt.fillchars = { eob = " " }
 
-vim.g.vimtex_view_general_viewer = "zathura"
-vim.g.vimtex_view_method = "zathura"
-
 vim.g.mapleader = " "
+vim.opt.clipboard = "unnamedplus"
+

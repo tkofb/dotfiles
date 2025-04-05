@@ -15,91 +15,66 @@ return {
 	{ "onsails/lspkind.nvim" },
 	{
 		"hrsh7th/nvim-cmp",
-		config = function()
+		version = false,
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+		},
+		opts = function()
 			local cmp = require("cmp")
-			local lspkind = require("lspkind")
+			local defaults = require("cmp.config.default")()
+			local auto_select = true
 
-			cmp.setup({
-				formatting = {
-					fields = { "kind", "abbr", "menu" },
-					format = function(entry, vim_item)
-						local kind = lspkind.cmp_format({
-							mode = "symbol_text",
-							menu = {
-								luasnip = "[Snip]",
-								nvim_lsp = "[LSP]",
-							},
-						})(entry, vim_item)
-						local strings = vim.split(kind.kind, "%s", { trimempty = true })
-						kind.kind = " " .. strings[1] .. " "
-						return kind
-					end,
-				},
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				-- completion = { completeopt = "menu,menuone,noinsert,noselect" },
-				-- preselect = cmp.PreselectMode.None,
+			return {
 				window = {
 					completion = cmp.config.window.bordered(),
 					documentation = cmp.config.window.bordered(),
 				},
+				formatting = {
+					format = function(entry, item)
+						local source_names = {
+							nvim_lsp = "[LSP]",
+							luasnip = "[SNIP]",
+							buffer = "[BUF]",
+							path = "[PATH]",
+						}
+
+						item.menu = source_names[entry.source.name] or "[UNK]"
+						return item
+					end,
+				},
+				completion = {
+					completeopt = "menu,menuone,noinsert" .. (auto_select and "" or ",noselect"),
+				},
+				preselect = auto_select and cmp.PreselectMode.Item or cmp.PreselectMode.None,
 				mapping = cmp.mapping.preset.insert({
-					["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-					["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
 					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+					["<CR>"] = cmp.mapping.confirm({ select = auto_select }),
+					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<S-CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
+					["<C-CR>"] = function(fallback)
+						cmp.abort()
+						fallback()
+					end,
 				}),
+
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
-					{ name = "luasnip" }, -- For luasnip users.
+					{ name = "path" },
 				}, {
 					{ name = "buffer" },
 				}),
-			})
-
-			-- Set configuration for specific filetype.
-			cmp.setup.filetype("gitcommit", {
-				sources = cmp.config.sources({
-					{ name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-				}, {
-					{ name = "buffer" },
-				}),
-			})
-
-			-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{ name = "buffer" },
+				experimental = {
+					ghost_text = vim.g.ai_cmp and { hl_group = "CmpGhostText" } or false,
 				},
-			})
-
-			-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-
-			-- Set up lspconfig.
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-			require("lspconfig")["lua_ls"].setup({
-				capabilities = capabilities,
-			})
-			require("lspconfig")["tsserver"].setup({
-				capabilities = capabilities,
-			})
-			require("lspconfig")["html"].setup({
-				capabilities = capabilities,
-			})
-			require("lspconfig")["cssls"].setup({
-				capabilities = capabilities,
-			})
-			require("lspconfig")["pylsp"].setup({
-				capabilities = capabilities,
-			})
+				sorting = defaults.sorting,
+			}
 		end,
 	},
 }
